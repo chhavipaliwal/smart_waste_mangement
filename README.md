@@ -18,6 +18,7 @@ The project integrates **Deep Learning (TensorFlow/Keras)** and a **Flask-based 
 ## 🧩 Tech Stack
 
 **Backend**
+
 - Python 3.9+
 - Flask
 - TensorFlow / Keras
@@ -25,13 +26,30 @@ The project integrates **Deep Learning (TensorFlow/Keras)** and a **Flask-based 
 - NumPy
 
 **Frontend**
+
 - HTML5, CSS3
 - JavaScript (for image preview)
 
 **Model Training**
+
 - CNN trained on the [Waste Classification Dataset](https://www.kaggle.com/datasets/techsash/waste-classification-data)
 
 ---
 
 ## 🗂️ Project Structure
 
+smart_waste_management/
+│
+├── app.py # Flask web app
+├── train_model.py # Model training script
+├── waste_classifier.h5 # Trained CNN model
+│
+├── static/
+│ ├── style.css # Stylesheet for frontend
+│ └── uploads/ # Uploaded images (auto-created)
+│
+├── templates/
+│ └── index.html # Frontend HTML
+│
+├── venv/ # Virtual environment (optional)
+└── README.md # Project documentation
