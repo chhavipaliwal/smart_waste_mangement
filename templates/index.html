@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Waste Classifier</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>♻️ Smart Waste Classifier</h1>
+      <p>
+        Upload an image to identify if it’s <b>Organic</b> or <b>Recyclable</b>
+      </p>
+
+      <form action="/predict" method="POST" enctype="multipart/form-data">
+        <div class="upload-box" id="upload-box">
+          <input
+            type="file"
+            name="file"
+            id="file-input"
+            accept="image/*"
+            required
+          />
+          <label for="file-input" class="upload-label">Choose Image</label>
+          <img id="preview" src="#" alt="Preview" style="display: none" />
+        </div>
+        <button type="submit" class="btn">Predict</button>
+      </form>
+
+      {% if result %}
+      <div class="result-card">
+        <img src="{{ result.image_path }}" alt="Uploaded Image" />
+        <h2>Prediction: <span>{{ result.class }}</span></h2>
+        <p>Confidence: {{ result.confidence }}</p>
+      </div>
+      {% endif %}
+    </div>
+
+    <script>
+      const input = document.getElementById("file-input");
+      const preview = document.getElementById("preview");
+
+      input.addEventListener("change", (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            preview.src = e.target.result;
+            preview.style.display = "block";
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+    </script>
+  </body>
+</html>

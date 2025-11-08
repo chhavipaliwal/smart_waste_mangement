@@ -1,0 +1,7 @@
+ app.py
+file_list.txt
+static
+templates
+train_model.py
+venv
+waste_classifier.h5

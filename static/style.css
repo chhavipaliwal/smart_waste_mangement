@@ -1,0 +1,91 @@
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #00b09b, #96c93d);
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  width: 400px;
+}
+
+h1 {
+  color: #2e7d32;
+  margin-bottom: 10px;
+}
+
+p {
+  color: #555;
+  font-size: 15px;
+}
+
+.upload-box {
+  background-color: #f0f0f0;
+  border: 2px dashed #96c93d;
+  border-radius: 12px;
+  padding: 30px;
+  margin: 20px 0;
+  cursor: pointer;
+  position: relative;
+}
+
+.upload-label {
+  font-weight: 600;
+  color: #2e7d32;
+  cursor: pointer;
+}
+
+#file-input {
+  display: none;
+}
+
+#preview {
+  margin-top: 15px;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.btn {
+  background: #00b09b;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #2e7d32;
+}
+
+.result-card {
+  margin-top: 30px;
+  background: #f8fff6;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.result-card img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.result-card h2 {
+  color: #333;
+}
+
+.result-card span {
+  color: #00b09b;
+}
