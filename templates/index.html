@@ -3,46 +3,204 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Smart Waste Classifier</title>
+    <title>SmartBin AI - Waste Classifier</title>
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
   </head>
   <body>
-    <div class="container">
-      <h1>♻️ Smart Waste Classifier</h1>
-      <p>
-        Upload an image to identify if it’s <b>Organic</b> or <b>Recyclable</b>
-      </p>
-
-      <form action="/predict" method="POST" enctype="multipart/form-data">
-        <div class="upload-box" id="upload-box">
-          <input
-            type="file"
-            name="file"
-            id="file-input"
-            accept="image/*"
-            required
-          />
-          <label for="file-input" class="upload-label">Choose Image</label>
-          <img id="preview" src="#" alt="Preview" style="display: none" />
+    <!-- Navigation Header -->
+    <header class="navbar">
+      <div class="container">
+        <div class="nav-wrapper">
+          <div class="logo">
+            <span class="logo-icon">🌱</span>
+            <span class="logo-text">SmartBin AI</span>
+          </div>
+          <nav class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#results">Results</a>
+            <a href="#about">About</a>
+          </nav>
         </div>
-        <button type="submit" class="btn">Predict</button>
-      </form>
-
-      {% if result %}
-      <div class="result-card">
-        <img src="{{ result.image_path }}" alt="Uploaded Image" />
-        <h2>Prediction: <span>{{ result.class }}</span></h2>
-        <p>Confidence: {{ result.confidence }}</p>
       </div>
-      {% endif %}
-    </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title">
+            <span class="title-green">Smarter Waste.</span>
+            <span class="title-dark">Cleaner Future.</span>
+          </h1>
+          <p class="hero-subtitle">
+            Upload waste images and get instant classification with eco-friendly
+            disposal tips.
+          </p>
+
+          <!-- Upload Form -->
+          <form
+            action="/predict"
+            method="POST"
+            enctype="multipart/form-data"
+            class="upload-form"
+          >
+            <div class="upload-box" id="upload-box">
+              <input
+                type="file"
+                name="file"
+                id="file-input"
+                accept="image/*"
+                required
+              />
+              <label for="file-input" class="upload-label"
+                >📤 Choose Image</label
+              >
+              <img
+                id="preview"
+                src="#"
+                alt="Preview"
+                class="preview-image"
+                style="display: none"
+              />
+            </div>
+            <button type="submit" class="btn btn-upload" id="predictBtn">
+              🔍 Predict
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section" id="results">
+      <div class="container">
+        <h2 class="section-title">Analysis Result</h2>
+        <p class="section-subtitle">View the classification of your waste</p>
+
+        {% if result %}
+        <div class="results-container">
+          <div class="result-image-wrapper">
+            <img
+              src="{{ result.image_path }}"
+              alt="Uploaded waste image"
+              class="result-image"
+            />
+          </div>
+
+          <div class="result-details">
+            <div class="confidence-badge">
+              <span class="confidence-percentage"
+                >{{ (result.confidence * 100) | int }}%
+              </span>
+            </div>
+
+            <div class="classification-info">
+              <h3>
+                {{ result.class }} - {{ (result.confidence * 100) | int }}%
+                Confidence
+              </h3>
+              <div class="category-badge">
+                <span class="badge-icon"
+                  >{% if result.class == 'Organic' %}🌱{% else %}♻️{% endif
+                  %}</span
+                >
+                <span class="badge-text">{{ result.class }}</span>
+              </div>
+            </div>
+
+            <div class="disposal-tips">
+              {% if result.class == 'Organic' %}
+              <p>
+                Place in your compost bin or organic waste container. Composting
+                reduces methane emissions from landfills.
+              </p>
+              {% else %}
+              <p>
+                Place in your recycling bin. Check local guidelines to ensure
+                material types are accepted.
+              </p>
+              {% endif %}
+            </div>
+
+            <div class="environmental-impact">
+              <h4>📊 Environmental Impact</h4>
+              {% if result.class == 'Organic' %}
+              <p>
+                Composting this item produces nutrient-rich soil and reduces
+                landfill waste by approximately 30%.
+              </p>
+              {% else %}
+              <p>
+                Recycling this item reduces landfill waste and conserves 5-10
+                gallons of energy equivalent.
+              </p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <div class="placeholder-container">
+          <div class="placeholder-icon">🖼️</div>
+          <p>Upload an image to see waste classification results</p>
+        </div>
+        {% endif %}
+      </div>
+    </section>
+
+    <!-- AI Features Section -->
+    <section class="features-section" id="about">
+      <div class="container">
+        <h2 class="section-title">AI-Powered Waste Classification</h2>
+        <p class="section-subtitle">
+          Our advanced system uses machine learning to identify and classify
+          waste properly
+        </p>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🔄</div>
+            <h3>Smart Segregation</h3>
+            <p>
+              Our AI accurately identifies patterns and categorizes waste into
+              organic and recyclable types instantly.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🌍</div>
+            <h3>Environmental Impact</h3>
+            <p>
+              Proper sorting reduces contamination and helps protect our planet
+              for future generations.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🧠</div>
+            <h3>Continuous Learning</h3>
+            <p>
+              With every classification, our AI model improves to identify even
+              more waste types accurately.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2025 SmartBin AI. Dedicated to a cleaner future.</p>
+      </div>
+    </footer>
 
     <script>
       const input = document.getElementById("file-input");
       const preview = document.getElementById("preview");
+      const predictBtn = document.getElementById("predictBtn");
 
       input.addEventListener("change", (event) => {
         const file = event.target.files[0];
@@ -51,6 +209,7 @@
           reader.onload = (e) => {
             preview.src = e.target.result;
             preview.style.display = "block";
+            predictBtn.style.display = "block";
           };
           reader.readAsDataURL(file);
         }

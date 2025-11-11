@@ -23,8 +23,11 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['GET', 'POST'])
 def predict():
+    if request.method == 'GET':
+        return redirect(url_for('home'))
+    
     if 'file' not in request.files:
         return redirect(url_for('home'))
 
@@ -48,12 +51,11 @@ def predict():
 
     # Prepare result
     result = {
-        "class": class_names[pred_class],
-        "confidence": f"{confidence * 100:.2f}%",
-        "image_path": "/" + file_path
-    }
+    "class": class_names[pred_class],
+    "confidence": float(confidence),  # keep it numeric (0.0–1.0)
+    "image_path": "/" + file_path
+}
 
-    # Render result back to index.html
     return render_template('index.html', result=result)
 
 
