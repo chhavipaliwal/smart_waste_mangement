@@ -11,11 +11,11 @@ app = Flask(__name__)
 UPLOAD_FOLDER = 'static/uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# Load model
-model = load_model("waste_classifier.h5")
+# Load trained model
+model = load_model("waste_classification_model.h5")
 
-# Define classes
-class_names = ['Recyclable', 'Organic']
+# Class names based on your training setup (binary)
+class_names = ['Organic', 'Recyclable']
 
 
 @app.route('/')
@@ -39,22 +39,28 @@ def predict():
     file_path = os.path.join(UPLOAD_FOLDER, file.filename)
     file.save(file_path)
 
-    # Read and preprocess
+    # Read and preprocess image
     img = cv2.imread(file_path)
     img_resized = cv2.resize(img, (224, 224))
     img_array = np.expand_dims(img_resized / 255.0, axis=0)
 
-    # Predict
-    pred = model.predict(img_array)
-    pred_class = np.argmax(pred)
-    confidence = np.max(pred)
+    # Predict using sigmoid output
+    pred = model.predict(img_array)[0][0]
+
+    # Threshold at 0.5
+    if pred > 0.5:
+        pred_class = "Recyclable"
+        confidence = pred
+    else:
+        pred_class = "Organic"
+        confidence = 1 - pred
 
     # Prepare result
     result = {
-    "class": class_names[pred_class],
-    "confidence": float(confidence),  # keep it numeric (0.0–1.0)
-    "image_path": "/" + file_path
-}
+        "class": pred_class,
+        "confidence": float(confidence),
+        "image_path": "/" + file_path
+    }
 
     return render_template('index.html', result=result)
 
