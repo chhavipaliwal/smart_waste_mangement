@@ -4,6 +4,7 @@ from tensorflow.keras.preprocessing import image
 import numpy as np
 import cv2
 import os
+import gdown  # 👈 added to auto-download model
 
 app = Flask(__name__)
 
@@ -11,8 +12,20 @@ app = Flask(__name__)
 UPLOAD_FOLDER = 'static/uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+# Path for model file
+MODEL_PATH = "waste_classification_model.h5"
+
+# Google Drive file ID
+MODEL_URL = "https://drive.google.com/uc?id=1gBbV1liz3_tevUu-QVaOMokrgtaFd2SR"
+
+# 🔽 Auto-download model if missing
+if not os.path.exists(MODEL_PATH):
+    print("Downloading model from Google Drive...")
+    gdown.download(MODEL_URL, MODEL_PATH, quiet=False)
+
 # Load trained model
-model = load_model("waste_classification_model.h5")
+model = load_model(MODEL_PATH)
+print("✅ Model loaded successfully!")
 
 # Class names based on your training setup (binary)
 class_names = ['Organic', 'Recyclable']

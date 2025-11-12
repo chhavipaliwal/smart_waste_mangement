@@ -3,3 +3,4 @@ tensorflow>=2.15
 opencv-python>=4.10
 numpy>=1.26
 gunicorn>=22.0
+gdown>=5.1.0
