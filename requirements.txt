@@ -1,6 +1,7 @@
+
 Flask>=3.0
-tensorflow==2.15.0
+tensorflow==2.20.0
 opencv-python>=4.10
 numpy>=1.26
+gdown>=5.1
 gunicorn>=22.0
-gdown>=5.1.0

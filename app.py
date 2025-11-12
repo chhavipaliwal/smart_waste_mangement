@@ -14,6 +14,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # Model path and Google Drive link
 MODEL_PATH = "waste_classification_model.h5"
+# ✅ Updated Google Drive direct download link
 MODEL_URL = "https://drive.google.com/uc?id=1gBbV1liz3_tevUu-QVaOMokrgtaFd2SR"
 
 # Auto-download model if not present

@@ -1,7 +1,4 @@
 venv
-waste_classifier.h5
-waste_classification_model.h5
-# Python
 __pycache__/
 *.pyc
 *.pyo
