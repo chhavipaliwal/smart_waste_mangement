@@ -1,0 +1,9 @@
+Flask
+tensorflow
+opencv-python
+numpy
+matplotlib
+seaborn
+scikit-learn
+kagglehub
+gunicorn
