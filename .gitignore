@@ -1,3 +1,31 @@
 venv
 waste_classifier.h5
 waste_classification_model.h5
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.sqlite3
+
+# Virtual environments
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints
+
+# System files
+.DS_Store
+
+# Model files (keep only your final one)
+*.h5
+!waste_classifier.h5
+
+# Uploaded images
+static/uploads/
+
+# IDE files
+.vscode/
+.idea/
