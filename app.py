@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
 from tensorflow import keras
-from tensorflow.keras.preprocessing import image
 import numpy as np
 import cv2
 import os
@@ -14,7 +13,6 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # Model path and Google Drive link
 MODEL_PATH = "waste_classification_model.h5"
-# ✅ Updated Google Drive direct download link
 MODEL_URL = "https://drive.google.com/uc?id=1gBbV1liz3_tevUu-QVaOMokrgtaFd2SR"
 
 # Auto-download model if not present
@@ -41,6 +39,7 @@ def home():
     return render_template('index.html')
 
 
+
 @app.route('/predict', methods=['POST'])
 def predict():
     # Ensure a file was uploaded
@@ -61,6 +60,14 @@ def predict():
     # Predict
     pred = model.predict(img_array)[0][0]
 
+    # 🔧 Fix — force normalize any weird values
+    if pred > 1:
+        pred = pred / 100
+    elif pred < 0:
+        pred = abs(pred)
+
+    pred = np.clip(pred, 0, 1)
+
     # Determine class
     if pred > 0.5:
         pred_class = "Recyclable"
@@ -71,7 +78,7 @@ def predict():
 
     result = {
         "class": pred_class,
-        "confidence": round(float(confidence) * 100, 2),
+        "confidence": round(confidence , 4),
         "image_path": "/" + file_path
     }
 
@@ -79,5 +86,5 @@ def predict():
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 5001))
     app.run(host="0.0.0.0", port=port, debug=True)
